@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>坦白说</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <style>
+        .nav{
+            height: 100px;
+            background: #000000;
+            overflow: hidden;
+        }
+        .nav img{
+            margin-top:5px;
+            margin-left:30px;
+        }
+        .img{
+            float: left;
+        }
+        .home{
+            float: right;
+        }
+        .home .btn{
+        	width: 70px;
+        	height: 40px;
+        	margin-top:30px;
+        }
+        .content{
+            margin-top:30px;
+        }
+        .content span{
+			font-size: 14px;
+			margin-left: 30px;
+        }
+        textarea{
+        	width: 100%;
+        	height: 150px;
+        	margin-left:5px;
+        	margin-top:20px;
+        	border:1px solid #000;
+        }
+        table{
+            width: 100%;
+            text-align:center;
+            margin-top:30px;
+        }
+        .footer{
+        	margin-top:30px;
+        	text-align: center;
+        	font: normal 14px/30px Arial, Helvetica, sans-serif;
+        }
+        .footer a{
+        	color: #9D9D9D;
+        }
+        a:hover{text-decoration: none; color:#BADF73;}
+        a:active{text-decoration: none;}
+    </style>
+</head>
+<body>
+    <div class="container-fluid nav">
+        <img class="img" src="logo.jpg" alt="logo" height="100px" width="130px">
+        <div class="home">
+            <button class="btn-success btn"><a href="//jiangrzc.cn" target="blank">首页</a></button>
+        </div>
+    </div>
+    <div class="container">  
+        <div class="col-md-6 col-md-offset-3 content">
+            <h2>看看是谁给你的坦白说</h2>
+            <span>注：如出现无法对应的数字，请仔细查看内容，特别注意大小写</span>
+            <div class="info">
+                <textarea name="infodata" id="infodata" placeholder="在此输入内容"></textarea>
+                <table>
+                    <thead>
+                        <td>QQ好友</td>
+                    </thead>
+                    <tbody id="showcase"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6 col-md-offset-3 footer">
+        	&copy;2018  <a href="http://jiangrzc.cn" target="blank">奋斗的土豆</a> <br>
+			<a href="http://www.miitbeian.gov.cn/" target="blank">鲁ICP备17028377号-1</a>	
+			<img src="http://jiangrzc.cn/wp-content/themes/simplehome_09131915/images/beianlogo.png">
+        </div>
+    </div>
+    <script>
+        function decrypt(b) {
+            b = b.replace('*S1*', ''); var c = [{ oe: '0', oK: '1', ow: '2', oi: '3', '7e': '4', '7K': '5', '7w': '6', '7i': '7', Ne: '8', NK: '9' },
+            { 4: '5', 6: '1', n: '0', '-': '2', o: '3', v: '4', C: '6', S: '7', c: '8', E: '9' },
+            { 5: '1', z: '0', A: '2', i: '3', P: '4', k: '5', s: '6', l: '7', F: '8', q: '9' }],
+                e = { on: '0', ov: '1', oc: '2', oz: '3', '7n': '4', '7v': '5', '7c': '6', '7z': '7', Nn: '8', Nv: '9' },
+                f = []; return b.split('').forEach(function (g, h) { if (1 == h % 4) { var k = f.pop(); f.push(k + g) } else f.push(g) }), f.map(function (g, h, k) { return 1 == k.length % 3 && h == k.length - 1 ? e[g] || '*' : c[h % 3][g] || '*' }).join('')
+        } function parse(b) { if ('string' != typeof b) return []; try { var e, c = JSON.parse(b); if (c instanceof Array) e = c; else { var f = c.data || c; e = f.confesses || f.list || [] } var g = []; return e.forEach(function (h) { h.fromEncodeUin && g.push({ from: decrypt(h.fromEncodeUin || ''), to: h.toNick || h.toUin + [], say: h.topicName }) }), g } catch (h) { return b.startsWith('*S1*') || b.startsWith('o') || b.startsWith('7') || b.startsWith('N') ? [{ from: decrypt(b), to: '', say: '' }] : [] } }
+    </script>
+    <script>
+        document.getElementById('infodata').addEventListener('keyup',reload_table)
+        document.getElementById('infodata').addEventListener('change',reload_table)
+        function reload_table() {
+            var r = document.getElementById('infodata').value
+            var s = document.getElementById('showcase')
+            var h = ''
+            parse(r).forEach(function(x) {
+                h += '<tr><td>' + x.from +  '</td><td>' + x.to + '</td><td>' + x.say + '</td></tr>'                 
+            })
+            s.innerHTML = h
+        }
+    </script>
+</body>
+</html>
